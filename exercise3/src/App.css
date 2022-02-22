@@ -1,0 +1,31 @@
+.productContainer {
+  display: grid;
+  grid-template-columns: 25% 25% 25% 25% ;
+}
+
+.productItem {
+border: 1px solid black;
+margin: 30px;
+padding: 10p;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+min-width: 200px;
+
+}
+
+.productItem img {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.visually-hidden {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
