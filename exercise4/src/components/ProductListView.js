@@ -5,8 +5,7 @@ export default function ProductListView(props) {
   return (
     <div className="productContainer"> 
     
-    {props.products2.map(product =><ProductItem name={product.name} image = {product.image} price={product.price} />)}
+    {props.products2.map(product =><ProductItem  name={product.name} image = {product.image} price={product.price} setKuittiMode={props.setKuittiMode} />)}
   </div>
   )
 }
-//filteredP

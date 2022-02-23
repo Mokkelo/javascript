@@ -10,6 +10,8 @@ import roku from './components/roku.jpg'
 import Search from './components/search'
 import Admin from './components/Admin'
 import CreateUser from './components/CreateUser'
+import ListAdditionInputs from './components/ListAdditionInputs'
+import Kuitti from './components/Kuitti'
 
 
 import ProductItem from './components/ProductItem'
@@ -22,6 +24,7 @@ import { useEffect, useState } from 'react';
 function App() {
 const [adminMode, setAdminMode] = useState(false);
 const [userMode, setUserMode] = useState(false);
+const [kuittiMode, setKuittiMode] = useState(false);
 const [ products] = useState([
 
 {
@@ -68,6 +71,23 @@ const [ products] = useState([
 },
 ])
 
+const [ users, setUsers] = useState([
+  {
+    id: 1,
+    name:"Pena",
+    saldo: 100,
+  },
+])
+
+const [kuitti, setKuitti] = useState([
+  {
+    id: 1,
+    name: "aa",
+    price: 1,
+  }
+
+])
+
 const [products2, setProducts] = useState([...products])
 const { search } = window.location;
 const query = new URLSearchParams(search).get('s');
@@ -83,7 +103,43 @@ const filterProducts = (products2, query) => {
   });
 };
 
+const onListAddition2 = (name, saldo) => {
+    
+  let newUsers = [...users, { 
+    id: users.length + 1, 
+    name: name,
+    saldo : saldo
+   }];
+   setUsers(newUsers); 
+
+}
+
+const onListAddition = (name, price) => {
+    
+  let newProducts = [...products, { 
+    id: products.length + 1, 
+    name: name,
+    image: null,
+    price : price
+    }];
+    console.log("Tässä");
+   setProducts(newProducts); 
+}
+
 const filteredProducts = filterProducts(products2, query);
+
+
+
+const ostanyt = (name, price)=> {
+  let newKuitti = [...kuitti, { 
+id:kuitti.length + 1, 
+name: name,
+price: price,  
+  }];
+  setKuitti(newKuitti);
+setKuittiMode(!kuittiMode);
+
+}
 
 const onItemDelete = (item) => {
 let newProducts = [...products2];
@@ -93,32 +149,28 @@ setProducts(newProducts);
 }
 
 let createUser = <CreateUser/>
-let output = <ProductListView products2={filteredProducts} />
+let output = <ProductListView products2={filteredProducts} setKuittiMode={ostanyt} />
 let hakukentta = <Search/>;
 if( adminMode == true ) {
-  output = <Admin products2={filteredProducts} onItemDelete={onItemDelete} onTallennaClick={products.name,products.price}  />;
+  output = <Admin products2={filteredProducts} onItemDelete={onItemDelete} onListAddition={onListAddition} products={products} setProducts={setProducts} />;
   hakukentta = "";
 }
 if (userMode == true) {
-  output = <CreateUser/>;
+  output = <CreateUser users= {users} onListAddition2= {onListAddition2} />;
   hakukentta = "";}
-
-const onListAddition = (price, name) => {
-    
-  let newProducts = [...products2, { 
-    id: products2.length + 1, 
-    name: name,
-    image: null,
-    price : price
-    }];
-   setProducts(newProducts); 
-
+if (kuittiMode == true){
+  output = <Kuitti kuitti={kuitti}/>;
 }
+
+
+
 
   return (
   <div> 
      <button onClick={() => setAdminMode(!adminMode) }>Admin Mode</button>
      <button onClick={() => setUserMode(!userMode) }>Create User</button>
+     <button onClick={() => setKuittiMode(!kuittiMode) }>Kuittimode</button>
+     <button onClick={() => onListAddition("asdf",100)}/>
     {hakukentta} 
     {output}
   </div>
