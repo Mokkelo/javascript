@@ -29,6 +29,8 @@ const [kuittiMode, setKuittiMode] = useState(false);
 const [ products] = useState([]);
 const [ users, setUsers] = useState([])
 const [kuitti, setKuitti] = useState([])
+const [kayttajankuitit, setKayttajankuitit]  = useState([])
+const [kayttajankuitit2, setKayttajankuitit2]  = useState([])
 const [products2, setProducts] = useState([...products])
 const { search } = window.location;
 const query = new URLSearchParams(search).get('s');
@@ -54,6 +56,27 @@ getDataUsers();
 
 }, []);
 
+
+useEffect(() => {                                                   // tällä haetaan kaikki käyttäjän kuitit
+  const haeKuitit = async (name) => {
+  const results = await axios.get("http://localhost:3000/kuitti/"+name+"")
+  //console.log(results);
+  setKayttajankuitit(results.data)
+}
+haeKuitit();
+
+}, []);
+
+
+
+const haeKuitit2 = async (kakka) => { //
+  //console.log(axios.get("http://localhost:3000/kuitti/Matti"))
+  const kayttajankuitit2 = await axios.get("http://localhost:3000/kuitti/"+kakka.name+"")
+  //console.log(kakka.name)
+  //console.log(kayttajankuitit2)
+  setKayttajankuitit2(kayttajankuitit2.data)
+  return kayttajankuitit2.data;
+  }
 
 const filterProducts = (products2, query) => {                      //filterproducts hakukenttää varten
   if (!query) {
@@ -153,11 +176,7 @@ newProducts.splice(deletedItemIndex, 1);
 setProducts(newProducts);*/
 }
 
-let kayttajankuitit =[]
-const haeKuitit = async (name) => { //
-  kayttajankuitit = await axios.get("http://localhost:3000/kuitti/"+name.name+"")
-  console.log(kayttajankuitit)
-  }
+
 
 
 let createUser = <CreateUser/>                                                        //nää liittyy outputtiin
@@ -176,7 +195,8 @@ if( adminMode == true ) {                                     //Tässä viedää
 if (userMode == true) {                                       //tässä viedään user sivulle kamaa eli create user
   output = <CreateUser users= {users} 
   onListAddition2= {onListAddition2}
-  haeKuitit= {haeKuitit} 
+  haeKuitit2= {haeKuitit2}
+  kayttajankuitit2={kayttajankuitit2} 
   kayttajankuitit= {kayttajankuitit}
    />;
   hakukentta = "";}
@@ -192,6 +212,7 @@ if (kuittiMode == true){                                        //tähän kuitin
      <button onClick={() => setAdminMode(!adminMode) }>Admin Mode</button>
      <button onClick={() => setUserMode(!userMode) }>Create User</button>
      <button onClick={() => setKuittiMode(!kuittiMode) }>Kuittimode</button>
+     
      
     {hakukentta} 
     {output}

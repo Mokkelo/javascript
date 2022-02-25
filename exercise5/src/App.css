@@ -29,3 +29,24 @@ min-width: 200px;
   white-space: nowrap;
   width: 1px;
 }
+
+.Kuitti{
+display: grid;
+grid-template-columns: 25% 25% 25%;
+align-items: ;
+justify-content: center;
+margin-top: 10px;
+padding: 20px;
+display: row;
+
+
+}
+
+.Kuitti2{
+  display: grid;
+grid-template-columns: 25% 25% 25%;
+align-items: ;
+justify-content: center;
+
+display: row;
+}
