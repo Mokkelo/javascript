@@ -96,7 +96,7 @@ window.location.reload(false);
 
 const filteredProducts = filterProducts(products2, query);      //tämän pitää olla tässä jostainsyystä, ei jaksanu debuggailla
 
-const ostanyt = async (name, price)=> {
+const ostanyt = async (name, price)=> {           //ostanyt nappia painettaessa tuote siirtyy ostoskoriin
   
   await axios.post("http://localhost:3000/ostoskori", {
     "ostaja": "Matti",
@@ -112,21 +112,6 @@ const onItemDelete = async (productdata) => {         // poistaa onnnistuneesti 
   await axios.delete("http://localhost:3000/products/"+productdata.id+"")
   window.location.reload(false);
 }
-
-/*const haeOstoskori = async (productdata) => {
-  const ostoskori = await axios.get("http://localhost:3000/ostoskori")
-  setOstoskori(ostoskori.data)
-  return ostoskori.data;
-}
-*/
-
-//const lisaaOstoskoriin = async (productdata) => {}
-
-
-
-
-
-
                                                                     
 let output = <ProductListView products2={filteredProducts} setKuittiMode={ostanyt} /> //nää liittyy outputtiin
 let hakukentta = <Search/>;
@@ -153,16 +138,11 @@ if (kuittiMode == true){                                        //tähän kuitin
   output = <Kuitti kuitti={kuitti}/>;
 }
 
-
-
-
   return (
   <div> 
      <button onClick={() => setAdminMode(!adminMode) }>Admin Mode</button>
      <button onClick={() => setUserMode(!userMode) }>Create User</button>
      <button onClick={() => setKuittiMode(!kuittiMode) }>Kuittimode</button>
-     
-     
     {hakukentta} 
     {output}
   </div>
