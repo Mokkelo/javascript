@@ -58,7 +58,7 @@ getDataUsers();
 }, []);
 
 
-useEffect(() => {                                                   // tällä haetaan kaikki käyttäjän kuitit
+/*useEffect(() => {                                                   // tällä haetaan kaikki käyttäjän kuitit
   const haeKuitit = async (name) => {
   const results = await axios.get("http://localhost:3000/kuitti/"+name+"")
   //console.log(results);
@@ -66,13 +66,13 @@ useEffect(() => {                                                   // tällä h
 }
 haeKuitit();
 
-}, []);
+}, []);*/
 
 
 
-const haeKuitit2 = async (kakka) => { //
-  //console.log(axios.get("http://localhost:3000/kuitti/Matti"))
-  const kayttajankuitit2 = await axios.get("http://localhost:3000/kuitti/"+kakka.name+"")
+const haeKuitit2 = async (kakka) => {                                     //  
+  //console.log(axios.get("http://localhost:3000/ostajanKuitit/Matti"))
+  const kayttajankuitit2 = await axios.get("http://localhost:3000/kuitti/a/"+kakka.name+"")
   //console.log(kakka.name)
   //console.log(kayttajankuitit2)
   setKayttajankuitit2(kayttajankuitit2.data)
