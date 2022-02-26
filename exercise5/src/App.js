@@ -1,28 +1,14 @@
 import './App.css';
-import Kyna from './components/Kyna.png';
-import hdd from './components/hdd.jpg'
-import johto from './components/johto.jpg'
-import muste from './components/muste.jpg'
-import nappis from './components/nappis.jpg'
-import naytto from './components/naytto.jpg'
-import roku from './components/roku.jpg'
-
 import Search from './components/search'
 import Admin from './components/Admin'
 import CreateUser from './components/CreateUser'
-import ListAdditionInputs from './components/ListAdditionInputs'
 import Kuitti from './components/Kuitti'
 import axios from 'axios';
-
-
-import ProductItem from './components/ProductItem'
 import ProductListView from './components/ProductListView'
 import { useEffect, useState } from 'react';
 
 
-
-
-function App() {
+function App() {                                          //constit täällä
 const [adminMode, setAdminMode] = useState(false);
 const [userMode, setUserMode] = useState(false);
 const [kuittiMode, setKuittiMode] = useState(false);
@@ -34,7 +20,7 @@ const [kayttajankuitit2, setKayttajankuitit2]  = useState([])
 const [products2, setProducts] = useState([...products])
 const { search } = window.location;
 const query = new URLSearchParams(search).get('s');
-//const [kayttajankuitit] = useState([]);
+
 
 
 useEffect(() => {                                                 //tälä haetaan kaikki tuotteet 
@@ -58,33 +44,16 @@ getDataUsers();
 }, []);
 
 
-/*useEffect(() => {                                                   // tällä haetaan kaikki käyttäjän kuitit
-  const haeKuitit = async (name) => {
-  const results = await axios.get("http://localhost:3000/kuitti/"+name+"")
-  //console.log(results);
-  setKayttajankuitit(results.data)
-}
-haeKuitit();
-
-}, []);*/
-
-
-
-const haeKuitit2 = async (kakka) => {                                     //  
-  //console.log(axios.get("http://localhost:3000/ostajanKuitit/Matti"))
+const haeKuitit2 = async (kakka) => {                                     //Tällä haetaan käyttäjän kuitit  
   const kayttajankuitit2 = await axios.get("http://localhost:3000/kuitti/a/"+kakka.name+"")
-  //console.log(kakka.name)
-  //console.log(kayttajankuitit2)
   setKayttajankuitit2(kayttajankuitit2.data)
   return kayttajankuitit2.data;
   }
 
 const filterProducts = (products2, query) => {                      //filterproducts hakukenttää varten
-  if (!query) {
-    
+  if (!query) {                                                     //tulostaa filterproductsin mutta jos haku tyhjä, sisältää kaikki tuotteet
       return products2;
   }
-
   return products2.filter((product) => {
       const productName = product.name.toLowerCase();
       return productName.includes(query);
@@ -99,16 +68,6 @@ const onListAddition2 = async (name, lname, address) => {       // tämä toimin
     "osoite": address
   })
   window.location.reload(false);
-
-
-
-  /*let newUsers = [...users, { //tämä koodi lisää käyttäjän hardkoodattuun listaan
-    id: users.length + 1, 
-    name: name,
-    saldo : saldo
-   }];
-   setUsers(newUsers); 
-*/
 }
 
 const onListAddition = async (name, price) => {         //lisää tuotteen listaan
@@ -118,28 +77,15 @@ const onListAddition = async (name, price) => {         //lisää tuotteen lista
    "price": price,
  })
  window.location.reload(false);
-
-  /*let newProducts = [...products, { 
-    id: products.length + 1, 
-    name: name,
-    image: null,
-    price : price
-    }];
-    console.log("Tässä");
-   setProducts(newProducts); */
 }
 
 const getProductIdNumber = async (name) => {        //hae nimellä idnumero
 let id = await axios.get("http://localhost:3000/products/"+name+"")
-  console.log(id.data)
  return id.data;
 }
 
 const onProductModify = async (name, price, oldname) => {     //muokkaa tuotetta
   let productsId =  await getProductIdNumber(oldname);
- console.log("productsid onproductmodify")
- console.log(productsId)
-
   await axios.put("http://localhost:3000/products/"+productsId+"", {
 
    "name": name,
@@ -148,35 +94,41 @@ const onProductModify = async (name, price, oldname) => {     //muokkaa tuotetta
 window.location.reload(false);
 };
 
-const filteredProducts = filterProducts(products2, query);
+const filteredProducts = filterProducts(products2, query);      //tämän pitää olla tässä jostainsyystä, ei jaksanu debuggailla
 
-const ostanyt = (name, price)=> {
-  let newKuitti = [...kuitti, { 
-id:kuitti.length + 1, 
-name: name,
-price: price,  
-  }];
+const ostanyt = async (name, price)=> {
+  
+  await axios.post("http://localhost:3000/ostoskori", {
+    "ostaja": "Matti",
+    "tuote": name,
+    "hinta" : price
+  })
+  let newKuitti = await axios.get("http://localhost:3000/ostoskori")
   setKuitti(newKuitti);
 setKuittiMode(!kuittiMode);
-
 }
 
 const onItemDelete = async (productdata) => {         // poistaa onnnistuneesti tuotteen, päivitys admin sivulle puuttuu
-console.log(productdata);
   await axios.delete("http://localhost:3000/products/"+productdata.id+"")
   window.location.reload(false);
- /* 
-let newProducts = [...products2];
-let deletedItemIndex = newProducts.findIndex(p=> p.id === item.id);
-newProducts.splice(deletedItemIndex, 1);
-setProducts(newProducts);*/
 }
 
+/*const haeOstoskori = async (productdata) => {
+  const ostoskori = await axios.get("http://localhost:3000/ostoskori")
+  setOstoskori(ostoskori.data)
+  return ostoskori.data;
+}
+*/
+
+//const lisaaOstoskoriin = async (productdata) => {}
 
 
 
-let createUser = <CreateUser/>                                                        //nää liittyy outputtiin
-let output = <ProductListView products2={filteredProducts} setKuittiMode={ostanyt} />
+
+
+
+                                                                    
+let output = <ProductListView products2={filteredProducts} setKuittiMode={ostanyt} /> //nää liittyy outputtiin
 let hakukentta = <Search/>;
 if( adminMode == true ) {                                     //Tässä viedään paljon kamaa admin sivulle
   output = <Admin products2={filteredProducts} 
@@ -188,6 +140,7 @@ if( adminMode == true ) {                                     //Tässä viedää
    />;
   hakukentta = "";
 }
+
 if (userMode == true) {                                       //tässä viedään user sivulle kamaa eli create user
   output = <CreateUser users= {users} 
   onListAddition2= {onListAddition2}
@@ -217,22 +170,3 @@ if (kuittiMode == true){                                        //tähän kuitin
 }
 
 export default App;
-
-
-
-
-
-
-
-
-//if(adminMode == false){
-//  output
-//}
-
-//{filteredProducts.map(product =><ProductItem name={product.name} image = {product.image} price={product.price} />)}
-//<Search/>
-//    <div className="productContainer"> 
-//    
-//    {filteredProducts.map(product =><ProductItem name={product.name} image = {product.image} price={product.price} />)}
-//  </div>
-// https://www.emgoto.com/react-search-bar/ lisää ohjieta jatkoon

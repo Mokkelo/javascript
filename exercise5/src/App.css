@@ -33,7 +33,7 @@ min-width: 200px;
 .Kuitti{
 display: grid;
 grid-template-columns: 25% 25% 25%;
-align-items: ;
+
 justify-content: center;
 margin-top: 10px;
 padding: 20px;
@@ -45,8 +45,21 @@ display: row;
 .Kuitti2{
   display: grid;
 grid-template-columns: 25% 25% 25%;
-align-items: ;
+
 justify-content: center;
 
 display: row;
+}
+
+.Kuittilista{
+
+  display: flex;
+  padding: 30px;
+  grid-gap: 30px;
+}
+
+.Kuittilista2{
+  display: flex;
+padding: 50px;
+grid-gap: 50px;
 }
