@@ -15,13 +15,16 @@ const app           = express(),
 const products = require('./routes/products')
 const users = require('./routes/users')
 const kuitti = require('./routes/kuitti')
-app.use(cors());
+const ostoskori = require('./routes/ostoskori')
 
+app.use(cors());
 app.use(bodyParser.json());
 
 app.use('/products', products)
 app.use('/users', users)
 app.use('/kuitti', kuitti)
+app.use('/ostoskori', ostoskori)
+
 
     
 app.listen(port,() => {

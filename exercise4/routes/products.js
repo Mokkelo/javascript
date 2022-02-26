@@ -51,11 +51,11 @@ const products = [
 
 
 
-router.get('/', (req,res) => {
+router.get('/', (req,res) => {                                  //hae kaikki tuotteet
     res.json(products);
 })
 
-router.get('/id/:productId', (req,res) => {
+router.get('/id/:userId', (req,res) => {                            //hae tuote idllä
     let foundIndex = -1;
     for(let i = 0; i< products.length; i++){
         if(products[i].id === req.params.productId){
@@ -70,7 +70,7 @@ router.get('/id/:productId', (req,res) => {
     }
 })
 
-router.get('/:productName', (req,res) => {
+router.get('/:productName', (req,res) => {                  //hae tuote nimellä
     let foundName = "wwwwww";
     for(let i = 0; i< products.length; i++){
         console.log(req.params.productName);
@@ -92,7 +92,7 @@ router.get('/:productName', (req,res) => {
     }
 )
 
-router.delete('/:productsId', (req,res)=> {
+router.delete('/:productsId', (req,res)=> {                     //poista tuote idllä
     let foundProducts = products.findIndex(t=> t.id === req.params.productsId);
     if(foundProducts === -1) {
         res.sendStatus(404);
@@ -102,7 +102,7 @@ router.delete('/:productsId', (req,res)=> {
     }
 })
 
-router.post('/', (req, res) => {
+router.post('/', (req, res) => {                                        //lisää tuote
     console.log(req.body);
 
     products.push({
@@ -113,7 +113,7 @@ router.post('/', (req, res) => {
     res.sendStatus(201);
 })
 
-router.put('/:productsId', (req, res) => {
+router.put('/:productsId', (req, res) => {                  //muokkaa tuotetta
     let foundProducts = products.find(t => t.id === req.params.productsId);
     if(foundProducts ) {
 

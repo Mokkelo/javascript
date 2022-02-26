@@ -23,11 +23,11 @@ const users = [
 
 
 router.get('/', (req,res) => {
-    res.json(users);
+    res.json(users);                                //hae kaikki käyttäjät
 })
 
 router.get('/id/:userId', (req,res) => {
-    let foundIndex = -1;
+    let foundIndex = -1;                                        //hae käyttäjä IDllä
     for(let i = 0; i< users.length; i++){
         if(users[i].id === req.params.userId){
             foundIndex = i;
@@ -41,7 +41,7 @@ router.get('/id/:userId', (req,res) => {
     }
 })
 
-router.get('/:userName', (req,res) => {
+router.get('/:userName', (req,res) => {                                             //hae käyttäjä nimellä
     let foundName = "wwwwww";
     for(let i = 0; i< users.length; i++){
         console.log(req.params.userName);
@@ -63,7 +63,7 @@ router.get('/:userName', (req,res) => {
     }
 )
 
-router.delete('/:usersId', (req,res)=> {
+router.delete('/:usersId', (req,res)=> {                                //poista käyttäjä
     let foundUser = users.findIndex(t=> t.id === req.params.usersId);
     if(foundUser === -1) {
         res.sendStatus(404);
@@ -73,7 +73,7 @@ router.delete('/:usersId', (req,res)=> {
     }
 })
 
-router.post('/', (req, res) => {
+router.post('/', (req, res) => {                            //lisää käyttäjä
     console.log(req.body);
 
     users.push({
@@ -85,7 +85,7 @@ router.post('/', (req, res) => {
     res.sendStatus(201);
 })
 
-router.put('/:userId', (req, res) => {
+router.put('/:userId', (req, res) => {                                  //muokkaa käyttäjää
     let foundUser = users.find(t => t.id === req.params.userId);
     if(foundUser ) {
 
