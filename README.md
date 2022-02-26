@@ -1,5 +1,5 @@
-ykkönen ruma ku rullatuoli
-kakkonen, tehty ja toimii
+ykkönen ruma ku rullatuoli.
+kakkonen, tehty ja toimii.
 kolmonen, toteutus ok, nelonen ja vitonen kuvaa paremmin toteutusta.
 teht nelonen, vain nodejs/express toteutus, kurkkaa mielummin teht 5 ja totea siellä että homma toimii. 
 vitonen, kaikki toteutettu mutta bugeja vielä. 
