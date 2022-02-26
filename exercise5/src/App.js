@@ -36,6 +36,7 @@ const { search } = window.location;
 const query = new URLSearchParams(search).get('s');
 //const [kayttajankuitit] = useState([]);
 
+
 useEffect(() => {                                                 //tälä haetaan kaikki tuotteet 
   const getData = async () => {
   const results = await axios.get('http://localhost:3000/products')
@@ -90,13 +91,15 @@ const filterProducts = (products2, query) => {                      //filterprod
   });
 };
 
-const onListAddition2 = (name, lname, address) => {       // tämä toiminto lisää käyttäjän listaan
+const onListAddition2 = async (name, lname, address) => {       // tämä toiminto lisää käyttäjän listaan
     
-  axios.post('http://localhost:3000/users/', {
+  await axios.post('http://localhost:3000/users/', {
     "name": name,
     "lname": lname,
     "osoite": address
   })
+  window.location.reload(false);
+
 
 
   /*let newUsers = [...users, { //tämä koodi lisää käyttäjän hardkoodattuun listaan
@@ -108,12 +111,13 @@ const onListAddition2 = (name, lname, address) => {       // tämä toiminto lis
 */
 }
 
-const onListAddition = (name, price) => {         //lisää tuotteen listaan
+const onListAddition = async (name, price) => {         //lisää tuotteen listaan
     
- axios.post('http://localhost:3000/products/', {
+ await axios.post('http://localhost:3000/products/', {
    "name": name,
    "price": price,
  })
+ window.location.reload(false);
 
   /*let newProducts = [...products, { 
     id: products.length + 1, 
@@ -136,21 +140,13 @@ const onProductModify = async (name, price, oldname) => {     //muokkaa tuotetta
  console.log("productsid onproductmodify")
  console.log(productsId)
 
-  axios.put("http://localhost:3000/products/"+productsId+"", {
+  await axios.put("http://localhost:3000/products/"+productsId+"", {
 
    "name": name,
    "price": price,
-}
-)};
-
-//let kayttajankuitit = [];
-/*const haeKuitit = async (name) => { //
-let kayttajankuitit = await axios.get("http://localhost:3000/kuitti/"+name.name+"")
-//console.log(kayttajankuitit.data);
-return kayttajankuitit;
-}*/
-
-
+})
+window.location.reload(false);
+};
 
 const filteredProducts = filterProducts(products2, query);
 
@@ -165,10 +161,10 @@ setKuittiMode(!kuittiMode);
 
 }
 
-const onItemDelete = (productdata) => {         // poistaa onnnistuneesti tuotteen, päivitys admin sivulle puuttuu
+const onItemDelete = async (productdata) => {         // poistaa onnnistuneesti tuotteen, päivitys admin sivulle puuttuu
 console.log(productdata);
-  axios.delete("http://localhost:3000/products/"+productdata.id+"")
-
+  await axios.delete("http://localhost:3000/products/"+productdata.id+"")
+  window.location.reload(false);
  /* 
 let newProducts = [...products2];
 let deletedItemIndex = newProducts.findIndex(p=> p.id === item.id);

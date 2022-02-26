@@ -20,6 +20,7 @@ export default function Admin(props) {
  
   const callProductModify = (p) => {    
     props.onProductModify(name, price, p.name)
+    
   }
   
   return (
