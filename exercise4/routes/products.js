@@ -73,21 +73,15 @@ router.get('/id/:userId', (req,res) => {                            //hae tuote 
 router.get('/:productName', (req,res) => {                  //hae tuote nimellä
     let foundName = "wwwwww";
     for(let i = 0; i< products.length; i++){
-        console.log(req.params.productName);
         if(products[i].name === req.params.productName){
             foundName = req.params.productName;
-            console.log(products[i].id);
             res.json(products[i].id)
             break;
         }}
         if (foundName == "wwwwww"){
-            //console.log(foundName);
-           // res.json(foundName);
             res.sendStatus(404);
         }
-
-         else {
-            
+         else {     
         }
     }
 )
@@ -103,8 +97,6 @@ router.delete('/:productsId', (req,res)=> {                     //poista tuote i
 })
 
 router.post('/', (req, res) => {                                        //lisää tuote
-    console.log(req.body);
-
     products.push({
         id: uuidv4(),
         name: req.body.name,
@@ -116,10 +108,8 @@ router.post('/', (req, res) => {                                        //lisä�
 router.put('/:productsId', (req, res) => {                  //muokkaa tuotetta
     let foundProducts = products.find(t => t.id === req.params.productsId);
     if(foundProducts ) {
-
         foundProducts.name = req.body.name;
         foundProducts.price = req.body.price;
-
         res.sendStatus(202);
     }
     else {

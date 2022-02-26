@@ -44,19 +44,14 @@ router.get('/id/:userId', (req,res) => {
 router.get('/:userName', (req,res) => {                                             //hae käyttäjä nimellä
     let foundName = "wwwwww";
     for(let i = 0; i< users.length; i++){
-        console.log(req.params.userName);
         if(users[i].name === req.params.userName){
             foundName = req.params.userName;
-            console.log(users[i].id);
             res.json(users[i].id)
             break;
         }}
         if (foundName == "wwwwww"){
-            //console.log(foundName);
-           // res.json(foundName);
             res.sendStatus(404);
         }
-
          else {
             
         }
@@ -74,8 +69,6 @@ router.delete('/:usersId', (req,res)=> {                                //poista
 })
 
 router.post('/', (req, res) => {                            //lisää käyttäjä
-    console.log(req.body);
-
     users.push({
         id: uuidv4(),
         name: req.body.name,
@@ -88,11 +81,9 @@ router.post('/', (req, res) => {                            //lisää käyttäj�
 router.put('/:userId', (req, res) => {                                  //muokkaa käyttäjää
     let foundUser = users.find(t => t.id === req.params.userId);
     if(foundUser ) {
-
         foundUser.name = req.body.name;
         foundUser.lname = req.body.lname;
         foundUser.address = req.body.address;
-
         res.sendStatus(202);
     }
     else {

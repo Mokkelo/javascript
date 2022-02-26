@@ -22,9 +22,7 @@ router.get('/', (req,res) => {              //hae ostoskori
 
 
 
-router.post('/', (req, res) => {                //lisää ostoskoriin tuote ja laske kokonaishinta
-    //console.log(req.body);
-    
+router.post('/', (req, res) => {                //lisää ostoskoriin tuote ja laske kokonaishinta 
 let uusikokonaishinta= kokonaishinta+req.body.hinta;
     ostoskori.push({
         id: uuidv4(),

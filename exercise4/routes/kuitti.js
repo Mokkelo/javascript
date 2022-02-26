@@ -23,35 +23,24 @@ const kuitit = [
     router.get('/a/:ostaja', (req,res) => {                       // tässä ajatuksena hakea käyttäjän kaikki kuitit käyttäjän nimellä
         let foundName = "wwwwww";
         ostajanKuitit.splice(0, ostajanKuitit.length);
-        //console.log(kuitit);
         for(let i = 0; i< kuitit.length; i++){
-            console.log(req.params.ostaja);
             if(kuitit[i].ostaja === req.params.ostaja){
                 ostajanKuitit.push({
                     id: uuidv4(),
                     ostaja: req.params.ostaja,
                     tuote: kuitit[i].tuote,                         //tähän toteutus että lisää taulukkoon
                     hinta: kuitit[i].hinta,
-                });
-                
-                                        
-               
+                });    
             }}
             foundName = req.params.ostaja; 
             if (foundName == "wwwwww"){
                 res.sendStatus(404);
             }
              else {
-                console.log(ostajanKuitit);
-    
                       res.json(ostajanKuitit);                  //tänne res.json uusitaulukko
             }
         }
     )
-
-//let kokonaishinta TÄSSÄ ylöspäin paskaa
-
-
 
 router.get('/', (req,res) => {                                  //hae kaikkki kuitit
     res.json(kuitit);       
@@ -72,8 +61,6 @@ router.get('/id/:kuittiId', (req,res) => {              //hae yksi kuitti idllä
     }
 })
 
-
-
 router.delete('/:kuittiId', (req,res)=> {                       //poistaa kuitin
     let foundUser = kuitit.findIndex(t=> t.id === req.params.kuittiId);
     if(foundUser === -1) {
@@ -85,8 +72,6 @@ router.delete('/:kuittiId', (req,res)=> {                       //poistaa kuitin
 })
 
 router.post('/', (req, res) => {                            //lisää kuitin
-    console.log(req.body);
-
     kuitit.push({
         id: uuidv4(),
         ostaja: req.body.ostaja,
@@ -96,19 +81,12 @@ router.post('/', (req, res) => {                            //lisää kuitin
     res.sendStatus(201);
 })
 
-
-
-
-
-
 router.put('/:kuittiId', (req, res) => {                    //muokkaa kuittia
     let foundUser = kuitit.find(t => t.id === req.params.kuittiId);
     if(foundUser ) {
-
         foundUser.ostaja = req.body.ostaja;
         foundUser.tuote = req.body.tuote;
         foundUser.hinta = req.body.hinta;
-
         res.sendStatus(202);
     }
     else {
